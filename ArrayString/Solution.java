@@ -20,18 +20,20 @@ class Result {
      */
 
     public static String timeConversion(String s) {
-    Integer helper;
-    String regex = ":";
-    String[] myArray = s.split(regex);
-    
-    if(myArray[2].contains("PM")){
-        helper = Integer.valueOf(myArray[0]) + 12;
-        myArray[0] = Integer.toString(helper);
-        myArray[2] = myArray[2].replace("PM", "");
-    }else{
-        myArray[2].replace("AM","");
-    }
-    return myArray[0]+":"+myArray[1]+":"+myArray[2];
+        String regex = ":";
+        String[] myArray = s.split(regex);
+        int hours = Integer.parseInt(myArray[0]);
+
+        if (myArray[2].contains("PM")) {
+            if (hours != 12) {
+                hours += 12;
+            }
+        } else { 
+            if (hours == 12) {
+                hours = 0;
+            }
+        }
+    return String.format("%02d:%s:%s", hours, myArray[1], myArray[2].replace("AM", "").replace("PM", ""));
     }
 
 }
